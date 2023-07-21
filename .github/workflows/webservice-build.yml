@@ -20,7 +20,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-      uses: iterative/setup-cml@v1
+    - name: DVC
+      uses: iterative/setup-cml@v1      
 
     - name: 'Docker build, webservice, evidently, prometheus and grafana'
       run: |-
@@ -40,7 +41,7 @@ jobs:
           deployment/grafana_deployment/
         docker build \
           --tag "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/prometheus:latest" \
-          deployment/prometheus_deployment/
+          deployment/prometheus_deployment/          
     - id: 'auth'
       name: 'Authenticate to Google Cloud'
       uses: 'google-github-actions/auth@v1'
