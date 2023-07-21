@@ -18,7 +18,7 @@ jobs:
           echo "$GOOGLE_APPLICATION_CREDENTIALS" | base64 --decode | jq > credentials.json
           pip install -r requirements.txt
           echo "Pulling data from GCS..."
-          dvc remote modify --local origin \
+          dvc remote modify --local gcs \
                     credentialpath './credentials.json'
           dvc pull
           echo "Training model..."
