@@ -20,12 +20,11 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-    - name: DVC
-      uses: iterative/setup-cml@v1      
 
     - name: 'Docker build, webservice, evidently, prometheus and grafana'
       run: |-
         echo "$GOOGLE_APPLICATION_CREDENTIALS" | jq > credentials.json
+        pip install -r requirements.txt
         echo "Pulling data from GCS..."
         dvc remote modify --local origin \
                   credentialpath './credentials.json'
