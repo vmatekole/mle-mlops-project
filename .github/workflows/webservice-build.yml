@@ -22,8 +22,10 @@ jobs:
       uses: actions/checkout@v3
 
     - name: 'Docker build, webservice, evidently, prometheus and grafana'
+      env: 
+        GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+
       run: |-
-        echo "$GOOGLE_APPLICATION_CREDENTIALS" | base64 --decode
         echo "$GOOGLE_APPLICATION_CREDENTIALS" | base64 --decode | jq > credentials.json
         pip install -r requirements.txt
         echo "Pulling data from GCS..."
