@@ -71,7 +71,8 @@ def main():
         X, y, random_state=42, test_size=0.2)
 
     GOOGLE_APPLICATION_CREDENTIALS: str = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")    
-    if not GOOGLE_APPLICATION_CREDENTIALS:        
+    if not GOOGLE_APPLICATION_CREDENTIALS:
+        print("Gettng SA_KEY")
         SA_KEY = os.getenv("SA_KEY")
         os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = SA_KEY
 
