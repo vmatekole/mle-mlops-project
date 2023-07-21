@@ -1,5 +1,6 @@
 [core]
     analytics = false
     remote = gcs
+    autostage = true
 ['remote "gcs"']
     url = gs://green-taxi-monitoring-project/

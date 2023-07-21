@@ -13,18 +13,18 @@ from sklearn.metrics import mean_squared_error
 from rich import print
 from rich.console import Console
 
-year = 2021
-month = 9
-color = "green"
+# year = 2021
+# month = 9
+# color = "green"
 
-# Download the data
-if not os.path.exists(f"./data/{color}_tripdata_{year}-{month:02d}.parquet"):
-    os.system(
-        f"wget -P ./data https://d37ci6vzurychx.cloudfront.net/trip-data/{color}_tripdata_{year}-{month:02d}.parquet")
+# # Download the data
+# if not os.path.exists(f"./data/{color}_tripdata_{year}-{month:02d}.parquet"):
+#     os.system(
+#         f"wget -P ./data https://d37ci6vzurychx.cloudfront.net/trip-data/{color}_tripdata_{year}-{month:02d}.parquet")
 
 # Load the data
 
-df = pd.read_parquet(f"./data/{color}_tripdata_{year}-{month:02d}.parquet")
+df = pd.read_parquet(f"./data/training/dvc_train.parquet")
 
 load_dotenv()
 
