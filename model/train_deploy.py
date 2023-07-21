@@ -1,3 +1,4 @@
+import argparse
 import os
 from dotenv import load_dotenv
 
@@ -40,6 +41,14 @@ features = ["PULocationID", "DOLocationID", "trip_distance",
             "passenger_count", "fare_amount", "total_amount"]
 target = 'duration'
 
+
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    "--cml_run", default=False, action=argparse.BooleanOptionalAction, required=True
+)
+args = parser.parse_args()
+cml_run = args.cml_run
+
 # calculate the trip duration in minutes and drop trips that are less than 1 minute and more than 2 hours
 
 
@@ -80,8 +89,8 @@ def main():
         lr.fit(X_train, y_train)
 
         y_pred = lr.predict(X_test)
-        rmse = mean_squared_error(y_test, y_pred, squared=False)
-        mlflow.log_metric("rmse", rmse)
+        rmse_test = mean_squared_error(y_test, y_pred, squared=False)
+        mlflow.log_metric("rmse", rmse_test)
 
         mlflow.sklearn.log_model(lr, "model")
         run_id = mlflow.active_run().info.run_id
@@ -98,6 +107,10 @@ def main():
             stage=new_stage,
             archive_existing_versions=True
         )
+
+        if cml_run:
+            with open("metrics.txt", "w") as f:
+                f.write(f"RMSE on the Test Set: {rmse_test}")
 
 
 if __name__ == '__main__':
