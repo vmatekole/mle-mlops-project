@@ -16,7 +16,7 @@ def index():
 
 @app.post("/predict", response_model=TaxiRidePrediction)
 def predict_duration(data: TaxiRide):
-    prediction = predict("green-taxi-ride-duration", data)
+    prediction = predict("green-taxi-ride-duration-project", data)
     try:
         response = requests.post(
             f"http://10.156.0.5:8085/iterate/green_taxi_data",
