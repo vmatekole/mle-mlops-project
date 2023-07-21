@@ -1,8 +1,8 @@
 name: CML
 on: 
-    push:
+    pull_request:
         branches:
-            - train
+            - main
 jobs:
   train-and-report:
     runs-on: ubuntu-latest
