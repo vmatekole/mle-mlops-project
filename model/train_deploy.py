@@ -61,8 +61,8 @@ def main():
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, random_state=42, test_size=0.2)
 
-    IN_GOOGLE_CLOUD = os.getenv("IN_GOOGLE_CLOUD")
-    if not IN_GOOGLE_CLOUD:
+    IN_GOOGLE_CLOUD: str = os.getenv("IN_GOOGLE_CLOUD")    
+    if not IN_GOOGLE_CLOUD:        
         SA_KEY = os.getenv("SA_KEY")
         os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = SA_KEY
 
@@ -70,9 +70,7 @@ def main():
         tags = {
             "model": "linear regression",
             "developer": "Victor Matekole",
-            "dataset": f"{color}-taxi",
-            "year": year,
-            "month": month,
+            "dataset": f"Defined in DVC/Git — Should provide the hash and details from DVC/Git",            
             "features": features,
             "target": target
         }
