@@ -89,14 +89,14 @@ def main():
         model_uri = f"runs:/{run_id}/model"
         model_name = "green-taxi-ride-duration-project"
         mlflow.register_model(model_uri=model_uri, name=model_name)
-
-        model_version = 1
+        models = client.get_latest_versions(model_name, stages=["None"])
+        model_version = models[0].version
         new_stage = "Production"
         client.transition_model_version_stage(
             name=model_name,
             version=model_version,
             stage=new_stage,
-            archive_existing_versions=False
+            archive_existing_versions=True
         )
 
 
