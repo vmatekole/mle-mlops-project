@@ -70,8 +70,8 @@ def main():
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, random_state=42, test_size=0.2)
 
-    IN_GOOGLE_CLOUD: str = os.getenv("IN_GOOGLE_CLOUD")    
-    if not IN_GOOGLE_CLOUD:        
+    GOOGLE_APPLICATION_CREDENTIALS: str = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")    
+    if not GOOGLE_APPLICATION_CREDENTIALS:        
         SA_KEY = os.getenv("SA_KEY")
         os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = SA_KEY
 
