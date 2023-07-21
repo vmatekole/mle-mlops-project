@@ -21,11 +21,25 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - name: 'Docker build'
+    - name: 'Docker build, webservice, evidently, prometheus and grafana'
       run: |-
+        echo "$GOOGLE_APPLICATION_CREDENTIALS" | jq > credentials.json
+        echo "Pulling data from GCS..."
+        dvc remote modify --local origin \
+                  credentialpath './credentials.json'
+        dvc pull
         docker build \
           --tag "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:latest" \
           webservice/
+        docker build \
+          --tag "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/evidently_service:latest" \
+          evidently_service/
+        docker build \
+          --tag "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/grafana:latest" \
+          deployment/grafana_deployment/
+        docker build \
+          --tag "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/prometheus:latest" \
+          deployment/prometheus_deployment/
     - id: 'auth'
       name: 'Authenticate to Google Cloud'
       uses: 'google-github-actions/auth@v1'
@@ -43,3 +57,7 @@ jobs:
     - name: 'Docker push'
       run: |-
         docker push "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:latest"
+        docker push "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/evidently_service:latest"
+        docker push "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/grafana:latest"
+        docker push "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/prometheus:latest"
+        rm credentials.json
