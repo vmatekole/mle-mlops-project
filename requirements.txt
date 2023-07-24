@@ -1,0 +1,8 @@
+mlflow
+pandas
+pyarrow
+google-cloud-storage
+dvc
+dvc-gs
+rich
+python-dotenv
