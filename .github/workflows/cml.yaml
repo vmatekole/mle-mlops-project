@@ -12,6 +12,7 @@ jobs:
       - name: Train model
         env:
           GOOGLE_APPLICATION_CREDENTIALS: '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}'
+          MLFLOW_TRACKING_URI: '${{ secrets.MLFLOW_TRACKING_URI }}'
           REPO_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
         run: >
           echo "$GOOGLE_APPLICATION_CREDENTIALS" | base64 --decode | jq >
